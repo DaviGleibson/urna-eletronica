@@ -1,0 +1,91 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background: #000;
+  color: #fff;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+}
+
+.tela {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: max(12px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+.tela.ativa {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.img-intro {
+  width: min(92vw, 560px);
+  height: auto;
+  max-height: 78dvh;
+  object-fit: contain;
+  border-radius: 28px;
+}
+
+.dica {
+  margin-top: 22px;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f3d5c4;
+  animation: pulsar 1.6s ease-in-out infinite;
+}
+
+.img-urna {
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  max-height: 100dvh;
+  object-fit: contain;
+}
+
+@keyframes pulsar {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (orientation: landscape) {
+  .img-intro {
+    max-height: 72dvh;
+  }
+
+  .dica {
+    margin-top: 12px;
+    font-size: 0.85rem;
+  }
+}
