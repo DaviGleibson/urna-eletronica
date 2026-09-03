@@ -25,7 +25,6 @@ const CANDIDATOS = [
   },
 ];
 
-const TELA_INICIO = "imagens/justica.png";
 const somBotao = new Audio("audio/botao-normal.mp3");
 const somFinalizar = new Audio("audio/finalizar.mp3");
 
@@ -85,6 +84,8 @@ function candidatoAtual() {
 
 function atualizarTela() {
   const atual = candidatoAtual();
+  telaCargo.textContent = atual.cargo;
+  telaDigitos.textContent = digitado;
 
   if (digitado === atual.numero) {
     telaDigitacao.hidden = true;
@@ -93,11 +94,8 @@ function atualizarTela() {
     return;
   }
 
-  telaCandidato.src = TELA_INICIO;
-  telaCandidato.hidden = digitado.length > 0;
-  telaDigitacao.hidden = digitado.length === 0;
-  telaCargo.textContent = atual.cargo;
-  telaDigitos.textContent = digitado;
+  telaCandidato.hidden = true;
+  telaDigitacao.hidden = false;
 }
 
 function piscarTecla(tecla) {
@@ -113,15 +111,25 @@ function tocarSom(audio) {
   audio.play().catch(() => {});
 }
 
+function proximoDigitoEsperado() {
+  const atual = candidatoAtual();
+  return atual.numero.charAt(digitado.length);
+}
+
 function entrarDigito(digito) {
   const atual = candidatoAtual();
   if (digitado.length >= atual.numero.length) {
-    return;
+    return false;
+  }
+
+  if (digito !== proximoDigitoEsperado()) {
+    return false;
   }
 
   digitado += digito;
   tocarSom(somBotao);
   atualizarTela();
+  return true;
 }
 
 function corrige() {
@@ -133,20 +141,21 @@ function corrige() {
 function confirma() {
   const atual = candidatoAtual();
   if (digitado !== atual.numero) {
-    return;
+    return false;
   }
 
   const ultimoCandidato = indiceCandidato === CANDIDATOS.length - 1;
 
   if (ultimoCandidato) {
     tocarSom(somFinalizar);
-    return;
+    return true;
   }
 
   tocarSom(somBotao);
   indiceCandidato += 1;
   digitado = "";
   atualizarTela();
+  return true;
 }
 
 function mostrarUrna() {
@@ -188,10 +197,11 @@ document.querySelectorAll(".tecla").forEach((tecla) => {
   tecla.addEventListener("pointerdown", (evento) => {
     evento.preventDefault();
     evento.stopPropagation();
-    piscarTecla(tecla);
 
     if (tecla.dataset.digito) {
-      entrarDigito(tecla.dataset.digito);
+      if (entrarDigito(tecla.dataset.digito)) {
+        piscarTecla(tecla);
+      }
       return;
     }
 
