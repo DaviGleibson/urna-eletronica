@@ -9,9 +9,9 @@ const telaDigitos = document.getElementById("tela-digitos");
 
 const CANDIDATOS = [
   {
-    numero: "13",
-    cargo: "Presidente",
-    tela: "imagens/lula-chapa.png",
+    numero: "1303",
+    cargo: "Deputada Federal",
+    tela: "imagens/rosa-chapa.png",
   },
   {
     numero: "130",
@@ -19,9 +19,9 @@ const CANDIDATOS = [
     tela: "imagens/humberto-chapa.png",
   },
   {
-    numero: "1303",
-    cargo: "Deputada Federal",
-    tela: "imagens/rosa-chapa.png",
+    numero: "13",
+    cargo: "Presidente",
+    tela: "imagens/lula-chapa.png",
   },
 ];
 
