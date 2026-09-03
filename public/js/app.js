@@ -74,6 +74,11 @@ function alinharMapa() {
   urnaMapa.style.top = `${(caixa.clientHeight - altura) / 2}px`;
 }
 
+function aoRedimensionar() {
+  atualizarOrientacao();
+  alinharMapa();
+}
+
 function candidatoAtual() {
   return CANDIDATOS[indiceCandidato];
 }
@@ -159,14 +164,13 @@ function mostrarUrna() {
 
 atualizarOrientacao();
 atualizarTela();
-window.addEventListener("resize", () => {
-  atualizarOrientacao();
-  alinharMapa();
-});
+window.addEventListener("resize", aoRedimensionar);
 window.addEventListener("orientationchange", () => {
-  atualizarOrientacao();
-  alinharMapa();
+  window.setTimeout(aoRedimensionar, 150);
 });
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", aoRedimensionar);
+}
 imgUrna.addEventListener("load", alinharMapa);
 document.addEventListener("click", travarHorizontal);
 document.addEventListener("touchend", travarHorizontal, { passive: true });
