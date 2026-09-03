@@ -43,11 +43,30 @@ if (new URLSearchParams(location.search).has("debug")) {
 }
 
 function estaNaHorizontal() {
-  return window.innerWidth >= window.innerHeight;
+  const tipo = String(screen.orientation?.type || "");
+  if (tipo.startsWith("portrait")) {
+    return false;
+  }
+
+  if (window.matchMedia("(orientation: portrait)").matches) {
+    return false;
+  }
+
+  if (tipo.startsWith("landscape") || window.matchMedia("(orientation: landscape)").matches) {
+    return true;
+  }
+
+  return window.innerWidth > window.innerHeight + 50;
 }
 
 function atualizarOrientacao() {
-  document.body.classList.toggle("retrato", !estaNaHorizontal());
+  const retrato = !estaNaHorizontal();
+  document.documentElement.classList.toggle("retrato", retrato);
+  document.body.classList.toggle("retrato", retrato);
+
+  if (retrato && telaIntro.classList.contains("ativa")) {
+    garantirMusicaAbertura();
+  }
 }
 
 async function travarHorizontal() {
@@ -141,6 +160,14 @@ function tocarMusicaAbertura() {
   musicaRosa.play().catch(() => {});
 }
 
+function garantirMusicaAbertura() {
+  if (!musicaRosa.paused) {
+    return;
+  }
+
+  musicaRosa.play().catch(() => {});
+}
+
 function pararMusicaAbertura() {
   musicaRosa.pause();
   musicaRosa.currentTime = 0;
@@ -205,7 +232,12 @@ function confirma() {
 }
 
 function mostrarUrna() {
-  if (!estaNaHorizontal() || telaUrna.classList.contains("ativa")) {
+  if (!estaNaHorizontal()) {
+    garantirMusicaAbertura();
+    return;
+  }
+
+  if (telaUrna.classList.contains("ativa")) {
     return;
   }
 
@@ -220,12 +252,24 @@ function mostrarUrna() {
   });
 }
 
+const avisoHorizontal = document.getElementById("aviso-horizontal");
+
+avisoHorizontal.addEventListener("pointerdown", (evento) => {
+  evento.preventDefault();
+  evento.stopPropagation();
+  garantirMusicaAbertura();
+  travarHorizontal();
+});
+
 atualizarOrientacao();
 atualizarTela();
 window.addEventListener("resize", aoRedimensionar);
 window.addEventListener("orientationchange", () => {
   window.setTimeout(aoRedimensionar, 150);
 });
+if (screen.orientation) {
+  screen.orientation.addEventListener("change", aoRedimensionar);
+}
 if (window.visualViewport) {
   window.visualViewport.addEventListener("resize", aoRedimensionar);
 }
