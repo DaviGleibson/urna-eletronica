@@ -21,7 +21,7 @@ const CANDIDATOS = [
   {
     numero: "13",
     cargo: "Presidente",
-    tela: "imagens/lula-chapa.png",
+    tela: "imagens/lula-chapa.png?v=2",
   },
 ];
 
