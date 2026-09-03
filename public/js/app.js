@@ -27,12 +27,16 @@ const CANDIDATOS = [
 
 const somBotao = new Audio("audio/botao-normal.mp3");
 const somFinalizar = new Audio("audio/finalizar.mp3");
+const musicaRosa = new Audio("audio/nossa-rosa.mp3");
 
 somBotao.preload = "auto";
 somFinalizar.preload = "auto";
+musicaRosa.preload = "auto";
+musicaRosa.loop = true;
 
 let indiceCandidato = 0;
 let digitado = "";
+let voltandoParaAbertura = false;
 
 if (new URLSearchParams(location.search).has("debug")) {
   document.body.classList.add("debug");
@@ -132,10 +136,52 @@ function entrarDigito(digito) {
   return true;
 }
 
-function corrige() {
-  digitado = "";
+function tocarMusicaAbertura() {
+  musicaRosa.currentTime = 0;
+  musicaRosa.play().catch(() => {});
+}
+
+function pararMusicaAbertura() {
+  musicaRosa.pause();
+  musicaRosa.currentTime = 0;
+}
+
+function reiniciarVotacao() {
   indiceCandidato = 0;
+  digitado = "";
   atualizarTela();
+}
+
+function voltarAbertura() {
+  if (voltandoParaAbertura) {
+    return;
+  }
+
+  voltandoParaAbertura = true;
+  somFinalizar.pause();
+  somFinalizar.currentTime = 0;
+  reiniciarVotacao();
+  telaUrna.classList.remove("ativa");
+  telaUrna.hidden = true;
+  telaIntro.hidden = false;
+  telaIntro.classList.add("ativa");
+  tocarMusicaAbertura();
+}
+
+function confirmarFinal() {
+  voltandoParaAbertura = false;
+
+  const irParaAbertura = () => {
+    voltarAbertura();
+  };
+
+  somFinalizar.addEventListener("ended", irParaAbertura, { once: true });
+  tocarSom(somFinalizar);
+  window.setTimeout(irParaAbertura, 2500);
+}
+
+function corrige() {
+  reiniciarVotacao();
 }
 
 function confirma() {
@@ -147,7 +193,7 @@ function confirma() {
   const ultimoCandidato = indiceCandidato === CANDIDATOS.length - 1;
 
   if (ultimoCandidato) {
-    tocarSom(somFinalizar);
+    confirmarFinal();
     return true;
   }
 
@@ -163,6 +209,9 @@ function mostrarUrna() {
     return;
   }
 
+  pararMusicaAbertura();
+  voltandoParaAbertura = false;
+  reiniciarVotacao();
   telaIntro.classList.remove("ativa");
   telaUrna.hidden = false;
   requestAnimationFrame(() => {
