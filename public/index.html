@@ -11,9 +11,18 @@
   <title>Aprenda como Votar</title>
   <link rel="icon" href="imagens/o-time.png">
   <link rel="apple-touch-icon" href="imagens/o-time.png">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div id="aviso-horizontal" class="aviso-horizontal" role="dialog" aria-live="polite" aria-label="Vire o celular na horizontal">
+    <div class="celular-girar" aria-hidden="true">
+      <span class="celular-corpo"></span>
+    </div>
+    <p class="aviso-titulo">Vire o celular</p>
+    <p class="aviso-texto">Use na horizontal para continuar</p>
+  </div>
+
   <main id="app">
     <section id="tela-intro" class="tela ativa" aria-label="Tela inicial">
       <img
@@ -25,11 +34,37 @@
     </section>
 
     <section id="tela-urna" class="tela" aria-label="Urna eletrônica" hidden>
-      <img
-        src="imagens/urna.png"
-        alt="Urna eletrônica da Justiça Eleitoral"
-        class="img-urna"
-      >
+      <div class="urna-caixa">
+        <img
+          id="img-urna"
+          src="imagens/urna.png"
+          alt="Urna eletrônica da Justiça Eleitoral"
+          class="img-urna"
+        >
+        <div id="urna-mapa" class="urna-mapa">
+          <div class="urna-tela">
+            <img id="tela-candidato" src="imagens/justica.png" alt="Justiça Eleitoral">
+            <div id="tela-digitacao" class="tela-digitacao" hidden>
+              <p class="tela-cargo-label">SEU VOTO PARA</p>
+              <p id="tela-cargo" class="tela-cargo"></p>
+              <p class="tela-numero-label">Número:</p>
+              <p id="tela-digitos" class="tela-digitos"></p>
+            </div>
+          </div>
+
+          <button type="button" class="tecla tecla-1" data-digito="1" aria-label="Tecla 1">
+            <img src="imagens/1.png" alt="">
+          </button>
+          <button type="button" class="tecla tecla-3" data-digito="3" aria-label="Tecla 3">
+            <img src="imagens/3.png" alt="">
+          </button>
+          <button type="button" class="tecla tecla-0" data-digito="0" aria-label="Tecla 0">
+            <img src="imagens/0.png" alt="">
+          </button>
+          <button type="button" class="tecla tecla-corrige" data-acao="corrige" aria-label="Corrige"></button>
+          <button type="button" class="tecla tecla-confirma" data-acao="confirma" aria-label="Confirma"></button>
+        </div>
+      </div>
     </section>
   </main>
 

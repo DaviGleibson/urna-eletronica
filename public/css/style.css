@@ -24,6 +24,83 @@ body {
   min-height: 100dvh;
 }
 
+.aviso-horizontal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 24px;
+  background: #000;
+  text-align: center;
+}
+
+.celular-girar {
+  width: 96px;
+  height: 96px;
+  display: grid;
+  place-items: center;
+}
+
+.celular-corpo {
+  display: block;
+  width: 42px;
+  height: 72px;
+  border: 3px solid #e31c23;
+  border-radius: 10px;
+  box-shadow: inset 0 -8px 0 0 #e31c23;
+  animation: girar-celular 1.8s ease-in-out infinite;
+}
+
+.aviso-titulo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.aviso-texto {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: #f3d5c4;
+}
+
+@keyframes girar-celular {
+  0%,
+  25% {
+    transform: rotate(0deg);
+  }
+  50%,
+  75% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@media (orientation: portrait) {
+  .aviso-horizontal {
+    display: flex;
+  }
+
+  #app {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+body.retrato .aviso-horizontal {
+  display: flex;
+}
+
+body.retrato #app {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .tela {
   position: fixed;
   inset: 0;
@@ -61,12 +138,139 @@ body {
   animation: pulsar 1.6s ease-in-out infinite;
 }
 
+#tela-urna {
+  padding: 0;
+}
+
+.urna-caixa {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform: scale(1.12);
+}
+
 .img-urna {
   width: 100%;
   height: 100%;
-  max-width: 100vw;
-  max-height: 100dvh;
+  max-width: none;
+  max-height: none;
   object-fit: contain;
+  display: block;
+}
+
+.urna-mapa {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.urna-tela {
+  position: absolute;
+  left: 4.8%;
+  top: 14.6%;
+  width: 54.4%;
+  height: 72.8%;
+  overflow: hidden;
+  background: #fff;
+}
+
+.urna-tela img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+}
+
+.tela-digitacao {
+  position: absolute;
+  inset: 0;
+  padding: 4% 5%;
+  background: #fff;
+  color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.tela-cargo-label {
+  font-size: clamp(10px, 1.8vw, 18px);
+  letter-spacing: 0.04em;
+}
+
+.tela-cargo {
+  margin: 2px 0 10px;
+  font-size: clamp(16px, 3.2vw, 32px);
+  font-weight: 700;
+}
+
+.tela-numero-label {
+  font-size: clamp(12px, 2vw, 20px);
+}
+
+.tela-digitos {
+  margin-top: 4px;
+  font-size: clamp(28px, 6vw, 64px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.tecla {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.tecla img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 3px;
+}
+
+.tecla.pressionada img {
+  opacity: 1;
+}
+
+.tecla-1 {
+  left: 68.9%;
+  top: 39.2%;
+  width: 6.6%;
+  height: 9.2%;
+}
+
+.tecla-3 {
+  left: 84.4%;
+  top: 39.2%;
+  width: 6.6%;
+  height: 9.2%;
+}
+
+.tecla-0 {
+  left: 76.7%;
+  top: 70.8%;
+  width: 6.8%;
+  height: 9.2%;
+}
+
+.tecla-corrige {
+  left: 76.8%;
+  top: 81.6%;
+  width: 9.2%;
+  height: 8.4%;
+}
+
+.tecla-confirma {
+  left: 87%;
+  top: 79.5%;
+  width: 9.4%;
+  height: 10.6%;
+}
+
+body.debug .tecla {
+  outline: 2px solid #0f0;
 }
 
 @keyframes pulsar {
