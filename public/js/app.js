@@ -26,6 +26,11 @@ const CANDIDATOS = [
 ];
 
 const TELA_INICIO = "imagens/justica.png";
+const somBotao = new Audio("audio/botao-normal.mp3");
+const somFinalizar = new Audio("audio/finalizar.mp3");
+
+somBotao.preload = "auto";
+somFinalizar.preload = "auto";
 
 let indiceCandidato = 0;
 let digitado = "";
@@ -97,6 +102,12 @@ function piscarTecla(tecla) {
   }, 280);
 }
 
+function tocarSom(audio) {
+  audio.pause();
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}
+
 function entrarDigito(digito) {
   const atual = candidatoAtual();
   if (digitado.length >= atual.numero.length) {
@@ -104,6 +115,7 @@ function entrarDigito(digito) {
   }
 
   digitado += digito;
+  tocarSom(somBotao);
   atualizarTela();
 }
 
@@ -119,11 +131,17 @@ function confirma() {
     return;
   }
 
-  if (indiceCandidato < CANDIDATOS.length - 1) {
-    indiceCandidato += 1;
-    digitado = "";
-    atualizarTela();
+  const ultimoCandidato = indiceCandidato === CANDIDATOS.length - 1;
+
+  if (ultimoCandidato) {
+    tocarSom(somFinalizar);
+    return;
   }
+
+  tocarSom(somBotao);
+  indiceCandidato += 1;
+  digitado = "";
+  atualizarTela();
 }
 
 function mostrarUrna() {
