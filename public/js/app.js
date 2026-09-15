@@ -326,7 +326,8 @@ function confirmarFinal() {
 }
 
 function corrige() {
-  reiniciarVotacao();
+  digitado = "";
+  atualizarTela();
 }
 
 function confirma() {
