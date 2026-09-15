@@ -57,7 +57,7 @@ const RACAS = [
       { numero: "55456", nome: "Anderson Luiz", foto: "imagens/anderson-luiz-55456.jpg" },
       { numero: "13333", nome: "Breno Araújo", foto: "imagens/breno-araujo-13333.jpg" },
       { numero: "13456", nome: "Josuel Santos", foto: "imagens/josuel-santos-13456.jpg" },
-      { numero: "70111", nome: "Socorrinho", foto: "imagens/socorrinho-70111.jpg" },
+      { numero: "70111", nome: "Socorrinho da APAMI", foto: "imagens/socorrinho-70111.jpg" },
       { numero: "13613", nome: "Ivete Caetano", foto: "imagens/ivete-caetano-13613.jpg" },
       { numero: "11777", nome: "Henrique Filho", foto: "imagens/henrique-filho-11777.jpg" },
       { numero: "40040", nome: "Sileno Guedes", foto: "imagens/sileno-guedes-40040.jpg" },
@@ -72,6 +72,17 @@ const RACAS = [
     id: "senador2",
     cargo: "Senador 2ª vaga",
     pool: "senadores",
+  },
+  {
+    id: "governador",
+    cargo: "Governador",
+    candidatos: [
+      {
+        numero: "40",
+        nome: "João Campos",
+        foto: "imagens/joao-campos-40.jpeg",
+      },
+    ],
   },
   {
     id: "presidente",
