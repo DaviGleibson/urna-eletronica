@@ -189,20 +189,80 @@ body.retrato #app {
   container-type: size;
 }
 
-.urna-tela img {
+.urna-tela > img {
   width: 100%;
   height: 100%;
   object-fit: fill;
   display: block;
 }
 
-.tela-digitacao {
+.tela-digitacao,
+.tela-candidato-html {
   position: absolute;
   inset: 0;
   padding: 4% 5%;
   background: #fff;
   color: #111;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.tela-candidato-html {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 3%;
+}
+
+.chapa-topo {
+  display: flex;
+  gap: 3%;
+  align-items: flex-start;
+  min-height: 0;
+  flex: 1;
+}
+
+.chapa-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.chapa-foto {
+  width: 38%;
+  max-width: 42%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center top;
+  border: 2px solid #3a2a1a;
+  border-radius: 4px;
+  background: #eee;
+  flex-shrink: 0;
+}
+
+.chapa-linha {
+  margin-top: 2.2%;
+  font-size: clamp(9px, 6.2cqh, 18px);
+  line-height: 1.25;
+}
+
+.chapa-rotulo {
+  font-weight: 400;
+}
+
+.chapa-valor {
+  font-weight: 700;
+}
+
+.chapa-numero {
+  font-size: clamp(14px, 11cqh, 32px);
+  letter-spacing: 0.06em;
+}
+
+.chapa-rodape {
+  border-top: 3px solid #111;
+  margin-top: 3%;
+  padding-top: 2.5%;
+  font-size: clamp(8px, 5.2cqh, 15px);
+  line-height: 1.35;
 }
 
 .tela-cargo-label {
@@ -245,6 +305,11 @@ body.retrato #app {
   border-radius: 3px;
 }
 
+.tecla.pressionada {
+  background: rgba(255, 255, 255, 0.28);
+  border-radius: 4px;
+}
+
 .tecla.pressionada img {
   opacity: 1;
 }
@@ -256,9 +321,58 @@ body.retrato #app {
   height: 9.2%;
 }
 
+.tecla-2 {
+  left: 76.7%;
+  top: 39.2%;
+  width: 6.6%;
+  height: 9.2%;
+}
+
 .tecla-3 {
   left: 84.4%;
   top: 39.2%;
+  width: 6.6%;
+  height: 9.2%;
+}
+
+.tecla-4 {
+  left: 68.9%;
+  top: 49.7%;
+  width: 6.6%;
+  height: 9.2%;
+}
+
+.tecla-5 {
+  left: 76.7%;
+  top: 49.7%;
+  width: 6.6%;
+  height: 9.2%;
+}
+
+.tecla-6 {
+  left: 84.4%;
+  top: 49.7%;
+  width: 6.6%;
+  height: 9.2%;
+}
+
+.tecla-7 {
+  left: 68.9%;
+  top: 60.3%;
+  width: 6.6%;
+  height: 9.2%;
+}
+
+.tecla-8 {
+  left: 76.7%;
+  top: 60.3%;
+  width: 6.6%;
+  height: 9.2%;
+}
+
+.tecla-9 {
+  left: 84.4%;
+  top: 60.3%;
   width: 6.6%;
   height: 9.2%;
 }

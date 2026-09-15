@@ -45,6 +45,22 @@
         <div id="urna-mapa" class="urna-mapa">
           <div class="urna-tela">
             <img id="tela-candidato" src="imagens/rosa-chapa.png" alt="Candidata" hidden>
+            <div id="tela-candidato-html" class="tela-candidato-html" hidden>
+              <div class="chapa-topo">
+                <div class="chapa-info">
+                  <p class="tela-cargo-label">SEU VOTO PARA</p>
+                  <p id="chapa-cargo" class="tela-cargo"></p>
+                  <p class="chapa-linha"><span class="chapa-rotulo">Número:</span> <span id="chapa-numero" class="chapa-valor chapa-numero"></span></p>
+                  <p class="chapa-linha"><span class="chapa-rotulo">Nome:</span> <span id="chapa-nome" class="chapa-valor"></span></p>
+                </div>
+                <img id="chapa-foto" class="chapa-foto" src="" alt="">
+              </div>
+              <div class="chapa-rodape">
+                <p>Aperte a Tecla</p>
+                <p><strong>VERDE</strong> para <strong>CONFIRMAR</strong></p>
+                <p><strong>LARANJA</strong> para <strong>CORRIGIR</strong></p>
+              </div>
+            </div>
             <div id="tela-digitacao" class="tela-digitacao">
               <p class="tela-cargo-label">SEU VOTO PARA</p>
               <p id="tela-cargo" class="tela-cargo">Deputada Federal</p>
@@ -56,9 +72,16 @@
           <button type="button" class="tecla tecla-1" data-digito="1" aria-label="Tecla 1">
             <img src="imagens/1.png" alt="">
           </button>
+          <button type="button" class="tecla tecla-2" data-digito="2" aria-label="Tecla 2"></button>
           <button type="button" class="tecla tecla-3" data-digito="3" aria-label="Tecla 3">
             <img src="imagens/3.png" alt="">
           </button>
+          <button type="button" class="tecla tecla-4" data-digito="4" aria-label="Tecla 4"></button>
+          <button type="button" class="tecla tecla-5" data-digito="5" aria-label="Tecla 5"></button>
+          <button type="button" class="tecla tecla-6" data-digito="6" aria-label="Tecla 6"></button>
+          <button type="button" class="tecla tecla-7" data-digito="7" aria-label="Tecla 7"></button>
+          <button type="button" class="tecla tecla-8" data-digito="8" aria-label="Tecla 8"></button>
+          <button type="button" class="tecla tecla-9" data-digito="9" aria-label="Tecla 9"></button>
           <button type="button" class="tecla tecla-0" data-digito="0" aria-label="Tecla 0">
             <img src="imagens/0.png" alt="">
           </button>

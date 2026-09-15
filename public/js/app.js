@@ -3,25 +3,80 @@ const telaUrna = document.getElementById("tela-urna");
 const imgUrna = document.getElementById("img-urna");
 const urnaMapa = document.getElementById("urna-mapa");
 const telaCandidato = document.getElementById("tela-candidato");
+const telaCandidatoHtml = document.getElementById("tela-candidato-html");
 const telaDigitacao = document.getElementById("tela-digitacao");
 const telaCargo = document.getElementById("tela-cargo");
 const telaDigitos = document.getElementById("tela-digitos");
+const chapaCargo = document.getElementById("chapa-cargo");
+const chapaNumero = document.getElementById("chapa-numero");
+const chapaNome = document.getElementById("chapa-nome");
+const chapaFoto = document.getElementById("chapa-foto");
 
-const CANDIDATOS = [
-  {
-    numero: "1303",
-    cargo: "Deputada Federal",
-    tela: "imagens/rosa-chapa.png",
-  },
+const SENADORES = [
   {
     numero: "130",
-    cargo: "Senador",
+    nome: "Humberto Costa",
     tela: "imagens/humberto-chapa.png",
   },
   {
-    numero: "13",
+    numero: "123",
+    nome: "Marília Arraes",
+    foto: "imagens/marilia-arraes-123.jpg",
+  },
+  {
+    numero: "180",
+    nome: "Paulo Rubem",
+    foto: "imagens/paulo-rubem-180.jpg",
+  },
+];
+
+const RACAS = [
+  {
+    id: "federal",
+    cargo: "Deputada Federal",
+    candidatos: [
+      {
+        numero: "1303",
+        nome: "Rosa Amorim",
+        tela: "imagens/rosa-chapa.png",
+      },
+    ],
+  },
+  {
+    id: "estadual",
+    cargo: "Deputado Estadual",
+    candidatos: [
+      { numero: "13000", nome: "Dani Portela", foto: "imagens/dani-portela-13000.jpg" },
+      { numero: "50000", nome: "Jô Cavalcanti", foto: "imagens/jo-cavalcanti-50000.jpg" },
+      { numero: "13123", nome: "Doriel Barros", foto: "imagens/doriel-barros-13123.jpg" },
+      { numero: "13113", nome: "João Paulo", foto: "imagens/joao-paulo-13113.jpg" },
+      { numero: "13100", nome: "Professor Gilmar", foto: "imagens/professor-gilmar-13100.jpg" },
+      { numero: "13013", nome: "Eugênia Lima", foto: "imagens/eugenia-lima-13013.jpg" },
+      { numero: "40111", nome: "Bruno Marques", foto: "imagens/bruno-marques-40111.jpg" },
+      { numero: "40140", nome: "Maria Arraes", foto: "imagens/maria-arraes-40140.jpg" },
+      { numero: "55456", nome: "Anderson Luiz", foto: "imagens/anderson-luiz-55456.jpg" },
+    ],
+  },
+  {
+    id: "senador1",
+    cargo: "Senador 1ª vaga",
+    pool: "senadores",
+  },
+  {
+    id: "senador2",
+    cargo: "Senador 2ª vaga",
+    pool: "senadores",
+  },
+  {
+    id: "presidente",
     cargo: "Presidente",
-    tela: "imagens/lula-chapa.png?v=2",
+    candidatos: [
+      {
+        numero: "13",
+        nome: "Lula",
+        tela: "imagens/lula-chapa.png?v=2",
+      },
+    ],
   },
 ];
 
@@ -34,8 +89,9 @@ somFinalizar.preload = "auto";
 musicaRosa.preload = "auto";
 musicaRosa.loop = true;
 
-let indiceCandidato = 0;
+let indiceRaca = 0;
 let digitado = "";
+let senadorEscolhido = null;
 let voltandoParaAbertura = false;
 
 if (new URLSearchParams(location.search).has("debug")) {
@@ -101,23 +157,81 @@ function aoRedimensionar() {
   alinharMapa();
 }
 
-function candidatoAtual() {
-  return CANDIDATOS[indiceCandidato];
+function racaAtual() {
+  return RACAS[indiceRaca];
 }
 
-function atualizarTela() {
-  const atual = candidatoAtual();
-  telaCargo.textContent = atual.cargo;
-  telaDigitos.textContent = digitado;
+function candidatosDisponiveis() {
+  const raca = racaAtual();
 
-  if (digitado === atual.numero) {
-    telaDigitacao.hidden = true;
-    telaCandidato.src = atual.tela;
+  if (raca.pool === "senadores") {
+    if (raca.id === "senador2" && senadorEscolhido) {
+      return SENADORES.filter((candidato) => candidato.numero !== senadorEscolhido);
+    }
+    return SENADORES.slice();
+  }
+
+  return raca.candidatos.slice();
+}
+
+function candidatoCompleto() {
+  return candidatosDisponiveis().find((candidato) => candidato.numero === digitado) || null;
+}
+
+function digitosPermitidos() {
+  const permitidos = new Set();
+
+  for (const candidato of candidatosDisponiveis()) {
+    if (
+      candidato.numero.startsWith(digitado) &&
+      candidato.numero.length > digitado.length
+    ) {
+      permitidos.add(candidato.numero.charAt(digitado.length));
+    }
+  }
+
+  return permitidos;
+}
+
+function esconderCandidato() {
+  telaCandidato.hidden = true;
+  telaCandidatoHtml.hidden = true;
+}
+
+function mostrarCandidato(candidato) {
+  const raca = racaAtual();
+
+  if (candidato.tela) {
+    telaCandidatoHtml.hidden = true;
+    telaCandidato.src = candidato.tela;
+    telaCandidato.alt = candidato.nome;
     telaCandidato.hidden = false;
     return;
   }
 
   telaCandidato.hidden = true;
+  chapaCargo.textContent = raca.cargo;
+  chapaNumero.textContent = candidato.numero;
+  chapaNome.textContent = candidato.nome;
+  chapaFoto.src = candidato.foto;
+  chapaFoto.alt = candidato.nome;
+  telaCandidatoHtml.hidden = false;
+}
+
+function atualizarTela() {
+  const raca = racaAtual();
+  const completo = candidatoCompleto();
+
+  telaCargo.textContent = raca.cargo;
+  telaDigitos.textContent = digitado;
+
+  if (completo) {
+    telaDigitacao.hidden = true;
+    mostrarCandidato(completo);
+    return;
+  }
+
+  esconderCandidato();
   telaDigitacao.hidden = false;
 }
 
@@ -134,18 +248,12 @@ function tocarSom(audio) {
   audio.play().catch(() => {});
 }
 
-function proximoDigitoEsperado() {
-  const atual = candidatoAtual();
-  return atual.numero.charAt(digitado.length);
-}
-
 function entrarDigito(digito) {
-  const atual = candidatoAtual();
-  if (digitado.length >= atual.numero.length) {
+  if (candidatoCompleto()) {
     return false;
   }
 
-  if (digito !== proximoDigitoEsperado()) {
+  if (!digitosPermitidos().has(digito)) {
     return false;
   }
 
@@ -174,8 +282,9 @@ function pararMusicaAbertura() {
 }
 
 function reiniciarVotacao() {
-  indiceCandidato = 0;
+  indiceRaca = 0;
   digitado = "";
+  senadorEscolhido = null;
   atualizarTela();
 }
 
@@ -212,20 +321,25 @@ function corrige() {
 }
 
 function confirma() {
-  const atual = candidatoAtual();
-  if (digitado !== atual.numero) {
+  const completo = candidatoCompleto();
+  if (!completo) {
     return false;
   }
 
-  const ultimoCandidato = indiceCandidato === CANDIDATOS.length - 1;
+  const raca = racaAtual();
+  const ultimo = indiceRaca === RACAS.length - 1;
 
-  if (ultimoCandidato) {
+  if (raca.id === "senador1") {
+    senadorEscolhido = completo.numero;
+  }
+
+  if (ultimo) {
     confirmarFinal();
     return true;
   }
 
   tocarSom(somBotao);
-  indiceCandidato += 1;
+  indiceRaca += 1;
   digitado = "";
   atualizarTela();
   return true;
