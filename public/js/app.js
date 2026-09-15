@@ -56,6 +56,7 @@ const RACAS = [
       { numero: "40140", nome: "Maria Arraes", foto: "imagens/maria-arraes-40140.jpg" },
       { numero: "55456", nome: "Anderson Luiz", foto: "imagens/anderson-luiz-55456.jpg" },
       { numero: "13333", nome: "Breno Araújo", foto: "imagens/breno-araujo-13333.jpg" },
+      { numero: "13456", nome: "Josuel Santos", foto: "imagens/josuel-santos-13456.jpg" },
     ],
   },
   {
