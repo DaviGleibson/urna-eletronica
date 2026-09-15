@@ -195,7 +195,14 @@ function digitosPermitidos() {
 
 function esconderCandidato() {
   telaCandidato.hidden = true;
+  telaCandidato.removeAttribute("src");
+  telaCandidato.alt = "";
   telaCandidatoHtml.hidden = true;
+  chapaFoto.removeAttribute("src");
+  chapaFoto.alt = "";
+  chapaCargo.textContent = "";
+  chapaNumero.textContent = "";
+  chapaNome.textContent = "";
 }
 
 function mostrarCandidato(candidato) {
@@ -203,6 +210,7 @@ function mostrarCandidato(candidato) {
 
   if (candidato.tela) {
     telaCandidatoHtml.hidden = true;
+    chapaFoto.removeAttribute("src");
     telaCandidato.src = candidato.tela;
     telaCandidato.alt = candidato.nome;
     telaCandidato.hidden = false;
@@ -210,6 +218,7 @@ function mostrarCandidato(candidato) {
   }
 
   telaCandidato.hidden = true;
+  telaCandidato.removeAttribute("src");
   chapaCargo.textContent = raca.cargo;
   chapaNumero.textContent = candidato.numero;
   chapaNome.textContent = candidato.nome;
