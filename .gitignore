@@ -2,3 +2,9 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 *.log
+
+# Local source photos / duplicate filenames (deploy uses public/ only)
+candidatos/
+public/audio/Nossa Rosa.mp3
+public/audio/botão normal.mp3
+public/imagens/lula chapa.png

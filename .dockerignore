@@ -1,4 +1,22 @@
-imagens
+# VCS / docs / compose (image only needs public/ + nginx.conf)
 .git
 .gitignore
 *.md
+docker-compose.yml
+
+# Source / duplicate assets not copied into the image
+candidatos/
+imagens/
+
+# Local junk
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
+*.tmp
+.cursor/
+
+# Accidental untracked duplicates (spaces/accents); keep kebab-case files in public/
+public/audio/Nossa Rosa.mp3
+public/audio/botão normal.mp3
+public/imagens/lula chapa.png
